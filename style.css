@@ -38,6 +38,15 @@ body{
     color: var(--secondary-dark);
 }
 
+@keyframes change-color {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
 /*Colors with preferred sceme*/
 @media (prefers-color-scheme: dark) {
     body {
@@ -114,15 +123,6 @@ body{
     background-color: var(--green-secondary);
 }
 
-#tiles-div{
-    border-radius: 10px;
-    width: 450px;
-    height: 450px;
-    background-color: var(--tile-primary-color);
-}
-
-
-
 
 #instructions-div{
     text-align: center;
@@ -132,5 +132,25 @@ body{
 
 .text-instr{
     font-size: 2rem;
-    
 }
+
+#tiles-div{
+    border-radius: 10px;
+    width: 450px;
+    height: 450px;
+    background-color: var(--tile-primary-color);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 10px solid var(--tile-primary-color);
+}
+
+.tile-div{
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    margin: 5px;
+    font-size: 2rem;
+    background-color: var(--tile-secondary-color);
+}
+
+

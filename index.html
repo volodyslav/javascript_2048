@@ -17,7 +17,7 @@
                 </div>
                 <div id="buttons">
                     <button id="start-button" class="btn">Start</button>
-                    <button id="color-change" class="btn">Color</button>
+                    <button id="color-change" class="btn" onClick="changeColor()">Color</button>
                 </div>
             </div>
         </div>
@@ -27,5 +27,18 @@
         </div>
     </div>
     <script src="./js/main.js"></script>
+    <script>
+        function changeColor(){
+            const body = document.body
+            if (body.classList.contains("light")){
+                body.classList.add("dark");
+                body.classList.remove("light");
+            }else{
+                body.classList.add("light");
+                body.classList.remove("dark");
+            }
+        }
+    </script>
+
 </body>
 </html>
