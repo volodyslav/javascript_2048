@@ -1,0 +1,136 @@
+:root{
+    --primary-dark: rgb(4, 6, 59);
+    --primary-light: rgb(238, 235, 235);
+
+    --secondary-light: rgb(238, 235, 235);
+    --secondary-dark: rgb(5, 7, 61);
+
+    --gray-primary: rgb(105, 105, 105);
+
+    --green-primary: rgb(3, 101, 3);
+    --green-secondary: rgb(8, 150, 8);
+
+    --tile-primary-color: rgb(90, 90, 90);
+    --tile-secondary-color: rgb(150, 148, 148);
+
+}
+
+
+*, *::after, *::before{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color:var(--primary-light);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: var(--secondary-dark);
+}
+
+/*Change color with button*/
+.dark {
+    background-color: var(--primary-dark);
+    color: var(--secondary-light);
+}
+
+.light {
+    background-color: var(--primary-light);
+    color: var(--secondary-dark);
+}
+
+/*Colors with preferred sceme*/
+@media (prefers-color-scheme: dark) {
+    body {
+      background-color: var(--primary-dark);
+      color: var(--primary-light);
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+}
+
+/* Elements */
+
+#main-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 2rem auto;
+    align-items: center;
+}
+
+#header-div{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 2rem;
+    align-items: center;
+    width: 40%;
+}
+
+#title{
+    font-size: 5rem;
+}
+
+#score-start{
+    display: flex;
+    gap: 2rem;
+}
+
+#scores{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 1rem;
+}
+
+.score{
+    color: var(--primary-light);
+    background-color: var(--gray-primary);
+    padding: 0.6rem;
+    font-size: 1.5rem;
+    border-radius: 10px;
+}
+
+#buttons{
+    display: flex;
+    gap: 1rem;
+}
+
+.btn{
+    padding: 1rem;
+    background-color: var(--green-primary);
+    color: var(--primary-light);
+    border: none;
+    border-radius: 10px;
+    font-size: larger;
+
+}
+
+.btn:hover{
+    background-color: var(--green-secondary);
+}
+
+#tiles-div{
+    border-radius: 10px;
+    width: 450px;
+    height: 450px;
+    background-color: var(--tile-primary-color);
+}
+
+
+
+
+#instructions-div{
+    text-align: center;
+    margin: 2rem auto;
+    width: 40%;
+}
+
+.text-instr{
+    font-size: 2rem;
+    
+}
