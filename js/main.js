@@ -18,15 +18,28 @@ let tilesArray = [
 const colorValue = {
     0: "rgb(150, 148, 148)",
     2: "rgb(218, 211, 211)",
+    4: "rgb(218, 211, 211)",
+    8: "rgb(218, 211, 211)",
+    16: "rgb(218, 211, 211)",
+    32: "rgb(218, 211, 211)",
+    64: "rgb(218, 211, 211)",
+    128: "rgb(218, 211, 211)",
 }
 
 // Text colors
 const color = {
-    2: "rgb(150, 148, 148)",
+    2: "black",
+    4: "black",
+    8: "black",
+    16: "black",
+    32: "black",
+    64: "black",
+    128: "black",
 }
 
 function drawTiles(row, col){
     // Clear the tile before drawing a new one
+
     const newTile = document.createElement("div");
     newTile.classList.add("tile-div");
     newTile.style.backgroundColor = colorValue[tilesArray[row][col]];
@@ -64,7 +77,95 @@ function generateTiles(){
     }
 }
 
+
+function moveTilesRight(){
+    for (let row = 3; row >= 0; row--){
+        for (let col = 3; col >= 0; col--){
+            if (col !== 0 && (tilesArray[row][col] === tilesArray[row][col-1])){
+                tilesArray[row][col] *= 2;
+                tilesArray[row][col-1] = 0;
+                drawTiles(row, col);
+            }
+            if (col !== 0 && tilesArray[row][col] === 0 && tilesArray[row][col - 1] !== 0){
+                tilesArray[row][col] = tilesArray[row][col - 1];
+                tilesArray[row][col - 1] = 0;
+                drawTiles(row, col);
+            }
+        }
+    }
+}
+
+function moveTilesLeft(){
+    for (let row = 0; row < tilesColumn; row++){
+        for (let col = 0; col < tilesColumn; col++){
+            if (col !== 3 && (tilesArray[row][col] === tilesArray[row][col + 1])){
+                tilesArray[row][col] *= 2;
+                tilesArray[row][col+1] = 0;
+                drawTiles(row, col);
+            }if (col !== 3 && tilesArray[row][col] === 0 && tilesArray[row][col + 1] !== 0){
+                tilesArray[row][col] = tilesArray[row][col + 1];
+                tilesArray[row][col + 1] = 0;
+                drawTiles(row, col);
+            }
+        }
+    }
+}
+
+function moveTilesDown(){
+    for (let row = 0; row < tilesColumn; row++){
+        for (let col = 0; col < tilesColumn; col++){
+            if (row !== 3 && (tilesArray[row][col] === tilesArray[row+1][col])){
+                tilesArray[row + 1][col] *= 2;
+                tilesArray[row][col] = 0;
+                drawTiles(row, col);
+            }if (row !== 3 && tilesArray[row + 1][col] === 0 && tilesArray[row][col] !== 0){
+                tilesArray[row + 1][col] = tilesArray[row][col];
+                tilesArray[row][col] = 0;
+                drawTiles(row, col);
+            }
+        }
+    }
+}
+
+function moveTilesUp(){
+    for (let row = 3; row >= 0; row--){
+        for (let col = 3; col >= 0; col--){
+            if (row !== 0 && (tilesArray[row][col] === tilesArray[row-1][col])){
+                tilesArray[row - 1][col] *= 2;
+                tilesArray[row][col] = 0;
+                drawTiles(row, col);
+            }if (row !== 0 && tilesArray[row - 1][col] === 0 && tilesArray[row][col] !== 0){
+                tilesArray[row - 1][col] = tilesArray[row][col];
+                tilesArray[row][col] = 0;
+                drawTiles(row, col);
+            }
+        }
+    }
+}
+
+function handleKeyboards(){
+    document.addEventListener("keydown", (event) => {
+        event.preventDefault();
+        // Remove previous tile
+        const tiles = document.querySelectorAll(".tile-div");
+        tiles.forEach(tile => tile.parentNode.removeChild(tile));
+        
+        if (event.key === "ArrowUp" || event.key === "w") {
+            moveTilesUp();
+        } else if (event.key === "ArrowDown" || event.key === "s") {
+            moveTilesDown();
+        } else if (event.key === "ArrowLeft" || event.key === "a") {
+            moveTilesLeft();
+        } else if (event.key === "ArrowRight" || event.key === "d") {
+            moveTilesRight();
+        }
+        generateTiles();
+    }); 
+}
+
+// Call
 generateTiles();
-for (let i = 0; i < 6; i++) {
+for (let i = 0; i < 8; i++) {
     generateInitialTiles();
 }
+handleKeyboards();
