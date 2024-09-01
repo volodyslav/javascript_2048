@@ -41,10 +41,9 @@ function loadScore(){
 
 function loadBestScore(){
     const savedBestScore = localStorage.getItem('bestScore');
-    if(savedBestScore){
+    if(savedBestScore ){
+        bestScore = JSON.parse(savedBestScore);
         bestScoreDiv.innerHTML = `Best ${JSON.parse(savedBestScore)}`;
-    }else{
-        bestScoreDiv.innerHTML = `Best 0`;
     }
 }
 
@@ -52,9 +51,6 @@ function loadBestScore(){
 loadArray();
 loadScore();
 loadBestScore();
-
-
-
 
 // Function to generate two new tiles with random values
 function generateTwoTiles(tiles) {

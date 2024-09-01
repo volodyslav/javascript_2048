@@ -28,9 +28,9 @@ class Tiles {
             // Save the game state to local storage
             if (score > bestScore){
                 bestScore = score;
-                localStorage.setItem('bestScore', JSON.stringify(bestScore));
-                bestScoreDiv.innerHTML = `Best ${bestScore}`
             }
+            localStorage.setItem('bestScore', JSON.stringify(bestScore));
+            bestScoreDiv.innerHTML = `Best ${bestScore}`
         }); 
     }
 
