@@ -12,11 +12,11 @@
             <h1 id="title">2048</h1>
             <div id="scores-start">
                 <div id="scores">
-                    <p class="score">Score 0</p>
+                    <p id="score_1" class="score">Score 0</p>
                     <p class="score">Best 0</p>
                 </div>
                 <div id="buttons">
-                    <button id="start-button" class="btn">Start</button>
+                    <button id="start-button" class="btn">Restart</button>
                     <button id="color-change" class="btn" onClick="changeColor()">Color</button>
                 </div>
             </div>
@@ -26,7 +26,10 @@
             <p class="text-instr">How to play: Use your arrow keys to move the tiles. Tiles with the same number merge into one when they touch. Add them up to reach 2048!</p>
         </div>
     </div>
+    <script src="./js/constants.js"></script>
+    <script src="./js/tiles.js"></script>
     <script src="./js/main.js"></script>
+    
     <script>
         function changeColor(){
             const body = document.body
