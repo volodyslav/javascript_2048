@@ -83,18 +83,22 @@ function moveTilesRight(){
         for (let col = 3; col >= 0; col--){
             let prevColumn = col // Get the column
             // Start to iter from 3 to 0 and then combine or move the tile
-            while (prevColumn !== 0 && (tilesArray[row][prevColumn - 1] === 0 || tilesArray[row][prevColumn - 1] !== 0)){
+            while (prevColumn !== 0 ){
                 prevColumn--;
-                if(tilesArray[row][col] === tilesArray[row][prevColumn]){
-                    tilesArray[row][col] *= 2;
-                    tilesArray[row][prevColumn] = 0;
-                    drawTiles(row, col);
-                }
                 if (tilesArray[row][col] === 0 && tilesArray[row][prevColumn] !== 0){
                     tilesArray[row][col] = tilesArray[row][prevColumn];
                     tilesArray[row][prevColumn] = 0;
                     drawTiles(row, col);
                 }
+                if(tilesArray[row][col] !== tilesArray[row][prevColumn] && tilesArray[row][prevColumn] !== 0){
+                    break;
+                }
+                if(tilesArray[row][col] === tilesArray[row][prevColumn]){
+                    tilesArray[row][col] *= 2;
+                    tilesArray[row][prevColumn] = 0;
+                    drawTiles(row, col);
+                }
+                
             }
         }
     }
@@ -107,13 +111,17 @@ function moveTilesLeft(){
             // Start to iter from 0 to 3 and then combine or move the tile
             while (prevColumn !== 3 && (tilesArray[row][prevColumn + 1] === 0 || tilesArray[row][prevColumn + 1] !== 0)){
                 prevColumn++;
-                if(tilesArray[row][col] === tilesArray[row][prevColumn]){
-                    tilesArray[row][col] *= 2;
+                if (tilesArray[row][col] === 0 && tilesArray[row][prevColumn] !== 0){
+                    tilesArray[row][col] = tilesArray[row][prevColumn];
                     tilesArray[row][prevColumn] = 0;
                     drawTiles(row, col);
                 }
-                if (tilesArray[row][col] === 0 && tilesArray[row][prevColumn] !== 0){
-                    tilesArray[row][col] = tilesArray[row][prevColumn];
+                // Break if 4 !== 8
+                if(tilesArray[row][col] !== tilesArray[row][prevColumn] && tilesArray[row][prevColumn] !== 0){
+                    break;
+                }
+                if(tilesArray[row][col] === tilesArray[row][prevColumn]){
+                    tilesArray[row][col] *= 2;
                     tilesArray[row][prevColumn] = 0;
                     drawTiles(row, col);
                 }
@@ -129,16 +137,20 @@ function moveTilesDown(){
             // Start to iter from 3 to 0 and then combine or move the tile
             while (prevRow !== 0 && (tilesArray[prevRow - 1][col] === 0 || tilesArray[prevRow - 1][col] !== 0)){
                 prevRow--;
-                if(tilesArray[row][col] === tilesArray[prevRow][col]){
-                    tilesArray[row][col] *= 2;
-                    tilesArray[prevRow][col] = 0;
-                    drawTiles(row, col);
-                }
                 if (tilesArray[row][col] === 0 && tilesArray[prevRow][col] !== 0){
                     tilesArray[row][col] = tilesArray[prevRow][col];
                     tilesArray[prevRow][col] = 0;
                     drawTiles(row, col);
                 }
+                if(tilesArray[row][col] !== tilesArray[prevRow][col] && tilesArray[prevRow][col] !== 0){
+                    break;
+                }
+                if(tilesArray[row][col] === tilesArray[prevRow][col]){
+                    tilesArray[row][col] *= 2;
+                    tilesArray[prevRow][col] = 0;
+                    drawTiles(row, col);
+                }
+                
             }
         }
     }
@@ -151,13 +163,16 @@ function moveTilesUp(){
             // Start to iter from 3 to 0 and then combine or move the tile
             while (prevRow !== 3 && (tilesArray[prevRow + 1][col] === 0 || tilesArray[prevRow + 1][col] !== 0)){
                 prevRow++;
-                if(tilesArray[row][col] === tilesArray[prevRow][col]){
-                    tilesArray[row][col] *= 2;
+                if (tilesArray[row][col] === 0 && tilesArray[prevRow][col] !== 0){
+                    tilesArray[row][col] = tilesArray[prevRow][col];
                     tilesArray[prevRow][col] = 0;
                     drawTiles(row, col);
                 }
-                if (tilesArray[row][col] === 0 && tilesArray[prevRow][col] !== 0){
-                    tilesArray[row][col] = tilesArray[prevRow][col];
+                if(tilesArray[row][col] !== tilesArray[prevRow][col] && tilesArray[prevRow][col] !== 0){
+                    break;
+                }
+                if(tilesArray[row][col] === tilesArray[prevRow][col]){
+                    tilesArray[row][col] *= 2;
                     tilesArray[prevRow][col] = 0;
                     drawTiles(row, col);
                 }
