@@ -12,7 +12,7 @@ const colorValue = {
 }
 
 // Text colors
-const color = {
+const colors = {
     2: "black",
     4: "black",
     8: "white",

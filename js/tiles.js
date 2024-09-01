@@ -22,16 +22,21 @@ class Tiles {
             }
             this.generateInitialTiles(); // Generate initial tiles 2
             this.generateTiles();
-            // Save the game state to local storage
-            localStorage.setItem('tilesArray', JSON.stringify(tilesArray));
-            localStorage.setItem('score', JSON.stringify(score));
-            // Save the game state to local storage
-            if (score > bestScore){
-                bestScore = score;
-            }
-            localStorage.setItem('bestScore', JSON.stringify(bestScore));
-            bestScoreDiv.innerHTML = `Best ${bestScore}`
+            this.#saveGameState(); // Save the game state to local storage
+            
         }); 
+    }
+
+    #saveGameState(){
+        // Save the game state to local storage
+        localStorage.setItem('tilesArray', JSON.stringify(tilesArray));
+        localStorage.setItem('score', JSON.stringify(score));
+        // Save the game state to local storage
+        if (score > bestScore){
+            bestScore = score;
+        }
+        localStorage.setItem('bestScore', JSON.stringify(bestScore));
+        bestScoreDiv.innerHTML = `Best ${bestScore}`
     }
 
     drawTiles(row, col){
@@ -42,7 +47,7 @@ class Tiles {
         if (this.tilesArray[row][col] !== 0){
             newTile.innerHTML = `${this.tilesArray[row][col]}`
         }
-        newTile.style.color = color[this.tilesArray[row][col]]
+        newTile.style.color = colors[this.tilesArray[row][col]]
         newTile.style.top = `${row * sizeTile}px`;
         newTile.style.left = `${col * sizeTile}px`;
         tilesDiv.appendChild(newTile);
@@ -50,14 +55,15 @@ class Tiles {
 
     generateInitialTiles(){
         // Generate random numbers for the tiles
-        let row = Math.floor(Math.random() * 4);
-        let column = Math.floor(Math.random() * 4);
-      
-        const arrayValue = this.tilesArray[row][column] === 0 ? this.tilesArray[row][column] = 2 : this.generateInitialTiles();
+        let row, column;
+        do{
+            row = Math.floor(Math.random() * 4);
+            column = Math.floor(Math.random() * 4);
+        }while(this.tilesArray[row][column] !== 0)
+        
         // Fill the tile with the random value
-        if (arrayValue === 2){
-            this.drawTiles(row, column);
-        }
+        this.tilesArray[row][column] = 2;
+        this.drawTiles(row, column);
     }
 
     generateTiles(){
@@ -72,6 +78,7 @@ class Tiles {
     #moveTilesRight(){
         for (let row = 3; row >= 0; row--){
             for (let col = 3; col >= 0; col--){
+                
                 let prevColumn = col // Get the column
                 // Start to iter from 3 to 0 and then combine or move the tile
                 while (prevColumn !== 0 ){
