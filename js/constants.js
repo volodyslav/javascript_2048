@@ -8,6 +8,7 @@ const colorValue = {
     32: "rgb(181, 61, 0)",
     64: "rgb(148, 51, 1)",
     128: "rgb(224, 221, 22)",
+    
 }
 
 // Text colors

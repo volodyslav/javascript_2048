@@ -22,7 +22,15 @@ class Tiles {
             }
             this.generateInitialTiles(); // Generate initial tiles 2
             this.generateTiles();
+            // Save the game state to local storage
             localStorage.setItem('tilesArray', JSON.stringify(tilesArray));
+            localStorage.setItem('score', JSON.stringify(score));
+            // Save the game state to local storage
+            if (score > bestScore){
+                bestScore = score;
+                localStorage.setItem('bestScore', JSON.stringify(bestScore));
+                bestScoreDiv.innerHTML = `Best ${bestScore}`
+            }
         }); 
     }
 
