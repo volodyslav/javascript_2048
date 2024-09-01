@@ -59,7 +59,7 @@ class Tiles {
         do{
             row = Math.floor(Math.random() * 4);
             column = Math.floor(Math.random() * 4);
-        }while(this.tilesArray[row][column] !== 0)
+        }while(this.tilesArray[row][column] !== 0);
         
         // Fill the tile with the random value
         this.tilesArray[row][column] = 2;
@@ -78,26 +78,15 @@ class Tiles {
     #moveTilesRight(){
         for (let row = 3; row >= 0; row--){
             for (let col = 3; col >= 0; col--){
-                
                 let prevColumn = col // Get the column
                 // Start to iter from 3 to 0 and then combine or move the tile
                 while (prevColumn !== 0 ){
                     prevColumn--;
-                    if (this.tilesArray[row][col] === 0 && this.tilesArray[row][prevColumn] !== 0){
-                        this.tilesArray[row][col] = this.tilesArray[row][prevColumn];
-                        this.tilesArray[row][prevColumn] = 0;
-                        this.drawTiles(row, col);
-                    }
+                    this.#checkColumnZero(prevColumn, row, col);
                     if(this.tilesArray[row][col] !== this.tilesArray[row][prevColumn] && this.tilesArray[row][prevColumn] !== 0){
                         break;
                     }
-                    if(this.tilesArray[row][col] === this.tilesArray[row][prevColumn]){
-                        scoreDiv.innerHTML = `Score ${score += this.tilesArray[row][col]}`
-                        this.tilesArray[row][col] *= 2;
-                        this.tilesArray[row][prevColumn] = 0;
-                        this.drawTiles(row, col);
-                    }
-                    
+                    this.#checkColumnMove(prevColumn, row, col);    
                 }
             }
         }
@@ -110,23 +99,31 @@ class Tiles {
                 // Start to iter from 0 to 3 and then combine or move the tile
                 while (prevColumn !== 3 && (this.tilesArray[row][prevColumn + 1] === 0 || this.tilesArray[row][prevColumn + 1] !== 0)){
                     prevColumn++;
-                    if (this.tilesArray[row][col] === 0 && this.tilesArray[row][prevColumn] !== 0){
-                        this.tilesArray[row][col] = this.tilesArray[row][prevColumn];
-                        this.tilesArray[row][prevColumn] = 0;
-                        this.drawTiles(row, col);
-                    }
+                    this.#checkColumnZero(prevColumn, row, col);
                     // Break if 4 !== 8
                     if(this.tilesArray[row][col] !== this.tilesArray[row][prevColumn] && this.tilesArray[row][prevColumn] !== 0){
                         break;
                     }
-                    if(this.tilesArray[row][col] === this.tilesArray[row][prevColumn]){
-                        scoreDiv.innerHTML = `Score ${score += this.tilesArray[row][col]}`
-                        this.tilesArray[row][col] *= 2;
-                        this.tilesArray[row][prevColumn] = 0;
-                        this.drawTiles(row, col);
-                    }
+                    this.#checkColumnMove(prevColumn, row, col);
                 }
             }
+        }
+    }
+
+    #checkColumnZero(prevColumn, row, col){
+        if (this.tilesArray[row][col] === 0 && this.tilesArray[row][prevColumn] !== 0){
+            this.tilesArray[row][col] = this.tilesArray[row][prevColumn];
+            this.tilesArray[row][prevColumn] = 0;
+            this.drawTiles(row, col);
+        }
+    }
+
+    #checkColumnMove(prevColumn, row, col){
+        if(this.tilesArray[row][col] === this.tilesArray[row][prevColumn]){
+            scoreDiv.innerHTML = `Score ${score += this.tilesArray[row][col]}`
+            this.tilesArray[row][col] *= 2;
+            this.tilesArray[row][prevColumn] = 0;
+            this.drawTiles(row, col);
         }
     }
 
@@ -137,21 +134,11 @@ class Tiles {
                 // Start to iter from 3 to 0 and then combine or move the tile
                 while (prevRow !== 0 && (this.tilesArray[prevRow - 1][col] === 0 || this.tilesArray[prevRow - 1][col] !== 0)){
                     prevRow--;
-                    if (this.tilesArray[row][col] === 0 && this.tilesArray[prevRow][col] !== 0){
-                        this.tilesArray[row][col] = this.tilesArray[prevRow][col];
-                        this.tilesArray[prevRow][col] = 0;
-                        this.drawTiles(row, col);
-                    }
+                    this.#checkRowZero(prevRow, row, col);
                     if(this.tilesArray[row][col] !== this.tilesArray[prevRow][col] && this.tilesArray[prevRow][col] !== 0){
                         break;
                     }
-                    if(this.tilesArray[row][col] === this.tilesArray[prevRow][col]){
-                        scoreDiv.innerHTML = `Score ${score += this.tilesArray[row][col]}`
-                        this.tilesArray[row][col] *= 2;
-                        this.tilesArray[prevRow][col] = 0;
-                        this.drawTiles(row, col);
-                    }
-                    
+                    this.#checkRowMove(prevRow, row, col);
                 }
             }
         }
@@ -164,22 +151,30 @@ class Tiles {
                 // Start to iter from 3 to 0 and then combine or move the tile
                 while (prevRow !== 3 && (this.tilesArray[prevRow + 1][col] === 0 || this.tilesArray[prevRow + 1][col] !== 0)){
                     prevRow++;
-                    if (this.tilesArray[row][col] === 0 && this.tilesArray[prevRow][col] !== 0){
-                        this.tilesArray[row][col] = this.tilesArray[prevRow][col];
-                        this.tilesArray[prevRow][col] = 0;
-                        this.drawTiles(row, col);
-                    }
+                    this.#checkRowZero(prevRow, row, col);
                     if(this.tilesArray[row][col] !== this.tilesArray[prevRow][col] && this.tilesArray[prevRow][col] !== 0){
                         break;
                     }
-                    if(this.tilesArray[row][col] === this.tilesArray[prevRow][col]){
-                        scoreDiv.innerHTML = `Score ${score += this.tilesArray[row][col]}`
-                        this.tilesArray[row][col] *= 2;
-                        this.tilesArray[prevRow][col] = 0;
-                        this.drawTiles(row, col);
-                    }
+                    this.#checkRowMove(prevRow, row, col);
                 }
             }
+        }
+    }
+
+    #checkRowZero(prevRow, row, col){
+        if (this.tilesArray[row][col] === 0 && this.tilesArray[prevRow][col] !== 0){
+            this.tilesArray[row][col] = this.tilesArray[prevRow][col];
+            this.tilesArray[prevRow][col] = 0;
+            this.drawTiles(row, col);
+        }
+    }
+
+    #checkRowMove(prevRow, row, col){
+        if(this.tilesArray[row][col] === this.tilesArray[prevRow][col]){
+            scoreDiv.innerHTML = `Score ${score += this.tilesArray[row][col]}`
+            this.tilesArray[row][col] *= 2;
+            this.tilesArray[prevRow][col] = 0;
+            this.drawTiles(row, col);
         }
     }
 }
