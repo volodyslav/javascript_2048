@@ -39,13 +39,22 @@ class Tiles {
         bestScoreDiv.innerHTML = `Best ${bestScore}`
     }
 
-    drawTiles(row, col){
+    drawTiles(row, col, combine=false) {
         // Clear the tile before drawing a new one
         const newTile = document.createElement("div");
         newTile.classList.add("tile-div");
         newTile.style.backgroundColor = colorValue[this.tilesArray[row][col]];
+        
+        // draw text
         if (this.tilesArray[row][col] !== 0){
             newTile.innerHTML = `${this.tilesArray[row][col]}`
+            if(combine){
+                newTile.style.transform = "scale(1.1)";
+                newTile.style.transition = "transform 0.5s";
+                setTimeout(() => {
+                    newTile.style.transform = "scale(1)"
+                }, 300)
+            }
         }
         newTile.style.color = colors[this.tilesArray[row][col]]
         newTile.style.top = `${row * sizeTile}px`;
@@ -59,6 +68,7 @@ class Tiles {
         do{
             row = Math.floor(Math.random() * 4);
             column = Math.floor(Math.random() * 4);
+            break;
         }while(this.tilesArray[row][column] !== 0);
         
         // Fill the tile with the random value
@@ -123,7 +133,7 @@ class Tiles {
             scoreDiv.innerHTML = `Score ${score += this.tilesArray[row][col]}`
             this.tilesArray[row][col] *= 2;
             this.tilesArray[row][prevColumn] = 0;
-            this.drawTiles(row, col);
+            this.drawTiles(row, col, true);
         }
     }
 
@@ -174,7 +184,7 @@ class Tiles {
             scoreDiv.innerHTML = `Score ${score += this.tilesArray[row][col]}`
             this.tilesArray[row][col] *= 2;
             this.tilesArray[prevRow][col] = 0;
-            this.drawTiles(row, col);
+            this.drawTiles(row, col, true);
         }
     }
 }
