@@ -160,3 +160,33 @@ body{
 }
 
 
+/**New game*/
+
+#restart{
+    opacity: 0.2;
+    width: 100%;
+    z-index: 10000;
+    background-color: var(--tile-primary-color);
+    border: none;
+    color: var(--primary-light);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.tile-combine{
+    animation: animate-combine 0.4s forwards ease-in-out;
+}
+
+@keyframes animate-combine{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.2);
+    }
+    100%{
+        transform: scale(1);
+    }
+}

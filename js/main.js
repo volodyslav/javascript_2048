@@ -3,6 +3,8 @@ const tilesDiv = document.querySelector("#tiles-div");
 const scoreDiv = document.querySelector("#score_1");
 const bestScoreDiv = document.querySelector("#best-score");
 const startBtn = document.querySelector("#start-button");
+const newGameBtn = document.querySelector("#new-game-btn");
+const restart = document.querySelector("#restart");
 
 // Initial values
 let tilesArray;
@@ -63,8 +65,9 @@ function generateTwoTiles(tiles) {
 function onHandleRestart() {
     // Restart everything
     tiles = null;
-    tilesArray = initializeTiles();
-    score = 0;
+    restart.style.display = 'none'; // set display to 'none'
+    tilesArray = initializeTiles(); // initialize new tiles array
+    score = 0; 
     scoreDiv.innerHTML = `Score ${score}`;
     localStorage.setItem('tilesArray', JSON.stringify(tilesArray));
     tiles = new Tiles(tilesArray);
@@ -72,6 +75,8 @@ function onHandleRestart() {
     tiles.generateTiles();
 }
 
+// Restart the game
+newGameBtn.addEventListener("click", onHandleRestart)
 startBtn.addEventListener("click", onHandleRestart)
 
 function main() {

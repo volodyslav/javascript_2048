@@ -1,7 +1,13 @@
 class Tiles {
     constructor(tilesArray) {
         this.tilesArray = tilesArray;
-        this.#handleKeyboards();
+        this.gameIsPlaying = true;
+
+        if (this.gameIsPlaying){
+            this.#handleKeyboards();
+        }
+
+        console.log(this.gameIsPlaying)
     }
 
     #handleKeyboards(){
@@ -20,8 +26,9 @@ class Tiles {
             } else if (event.key === "ArrowRight" || event.key === "d") {
                 this.#moveTilesRight();
             }
-            this.generateInitialTiles(); // Generate initial tiles 2
             this.generateTiles();
+            this.generateInitialTiles(); // Generate initial tiles 2
+            
             this.#saveGameState(); // Save the game state to local storage
             
         }); 
@@ -49,11 +56,7 @@ class Tiles {
         if (this.tilesArray[row][col] !== 0){
             newTile.innerHTML = `${this.tilesArray[row][col]}`
             if(combine){
-                newTile.style.transform = "scale(1.1)";
-                newTile.style.transition = "transform 0.5s";
-                setTimeout(() => {
-                    newTile.style.transform = "scale(1)"
-                }, 300)
+                newTile.classList.add("tile-combine");
             }
         }
         newTile.style.color = colors[this.tilesArray[row][col]]
@@ -74,10 +77,40 @@ class Tiles {
         }
         
         const zeroValueLength = zeroValue.length;
-        const randomArray = zeroValue[Math.floor(Math.random() * zeroValueLength)]
-        // Fill the tile with the random value
-        this.tilesArray[randomArray[0]][randomArray[1]] = 2;
-        this.drawTiles(randomArray[0], randomArray[1]);
+        if (zeroValueLength !== 0 && this.gameIsPlaying){
+            const randomArray = zeroValue[Math.floor(Math.random() * zeroValueLength)]
+            // Fill the tile with the random value
+            this.tilesArray[randomArray[0]][randomArray[1]] = 2;
+            this.drawTiles(randomArray[0], randomArray[1]);
+        }else if (zeroValueLength === 0) {
+            const gameOver = this.#checkPlayingGame();
+            if (!gameOver){
+                this.gameIsPlaying = false;
+                restart.style.display = 'flex';
+            }
+            
+        }
+    }
+
+    #checkPlayingGame(){
+        let gameOver = true;
+        for (let row = 0; row < tilesColumn; row++){
+            for (let col = 0; col < tilesColumn; col++){
+                // Check if all tiles are filled or not
+                const playingCondition = (col !== 3 && this.tilesArray[row][col] === this.tilesArray[row][col + 1]) || (col !== 0 &&  this.tilesArray[row][col] === this.tilesArray[row][col - 1] )|| (row !== 3 && this.tilesArray[row][col] === this.tilesArray[row + 1][col]) || (row !== 0 && this.tilesArray[row][col] === this.tilesArray[row - 1][col]) || this.tilesArray[row][col] === 0;
+                console.log(playingCondition)
+                if(playingCondition){
+                    console.log("All tiles are filled");
+                    gameOver = true;
+                    return;
+                }else if(!playingCondition){
+                    console.log("All tiles are filled");
+                    gameOver = false;
+                }
+            }
+        }
+        console.log(gameOver)
+        return gameOver;
     }
 
     generateTiles(){
