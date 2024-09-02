@@ -64,16 +64,20 @@ class Tiles {
 
     generateInitialTiles(){
         // Generate random numbers for the tiles
-        let row, column;
-        do{
-            row = Math.floor(Math.random() * 4);
-            column = Math.floor(Math.random() * 4);
-            break;
-        }while(this.tilesArray[row][column] !== 0);
+        const zeroValue = [];
+        for (let row = 0; row < tilesColumn; row++){
+            for (let col = 0; col < tilesColumn; col++){
+                if (tilesArray[row][col] === 0){
+                    zeroValue.push([row, col]);
+                }
+            }
+        }
         
+        const zeroValueLength = zeroValue.length;
+        const randomArray = zeroValue[Math.floor(Math.random() * zeroValueLength)]
         // Fill the tile with the random value
-        this.tilesArray[row][column] = 2;
-        this.drawTiles(row, column);
+        this.tilesArray[randomArray[0]][randomArray[1]] = 2;
+        this.drawTiles(randomArray[0], randomArray[1]);
     }
 
     generateTiles(){
