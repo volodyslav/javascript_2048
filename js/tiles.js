@@ -3,11 +3,9 @@ class Tiles {
         this.tilesArray = tilesArray;
         this.gameIsPlaying = true;
 
-        if (this.gameIsPlaying){
-            this.#handleKeyboards();
-        }
+        this.#handleKeyboards();
+        
 
-        console.log(this.gameIsPlaying)
     }
 
     #handleKeyboards(){
@@ -70,7 +68,7 @@ class Tiles {
         const zeroValue = [];
         for (let row = 0; row < tilesColumn; row++){
             for (let col = 0; col < tilesColumn; col++){
-                if (tilesArray[row][col] === 0){
+                if (this.tilesArray[row][col] === 0){
                     zeroValue.push([row, col]);
                 }
             }
@@ -82,36 +80,39 @@ class Tiles {
             // Fill the tile with the random value
             this.tilesArray[randomArray[0]][randomArray[1]] = 2;
             this.drawTiles(randomArray[0], randomArray[1]);
-        }else if (zeroValueLength === 0) {
-            const gameOver = this.#checkPlayingGame();
-            if (!gameOver){
-                this.gameIsPlaying = false;
-                restart.style.display = 'flex';
-            }
-            
+        }else if (zeroValueLength === 0 && this.gameIsPlaying) {
+            this.#checkPlayingGame();
         }
     }
 
     #checkPlayingGame(){
-        let gameOver = true;
+        let gameOverArray = [];
         for (let row = 0; row < tilesColumn; row++){
             for (let col = 0; col < tilesColumn; col++){
                 // Check if all tiles are filled or not
-                const playingCondition = (col !== 3 && this.tilesArray[row][col] === this.tilesArray[row][col + 1]) || (col !== 0 &&  this.tilesArray[row][col] === this.tilesArray[row][col - 1] )|| (row !== 3 && this.tilesArray[row][col] === this.tilesArray[row + 1][col]) || (row !== 0 && this.tilesArray[row][col] === this.tilesArray[row - 1][col]) || this.tilesArray[row][col] === 0;
-                console.log(playingCondition)
-                if(playingCondition){
-                    console.log("All tiles are filled");
-                    gameOver = true;
-                    return;
-                }else if(!playingCondition){
-                    console.log("All tiles are filled");
-                    gameOver = false;
+                if (this.tilesArray[row][col] === 0) {
+                    gameOverArray.push(true);
+                }
+                // Check adjacent tiles for possible moves
+                if (col < tilesColumn - 1 && this.tilesArray[row][col] === this.tilesArray[row][col + 1]) {
+                    gameOverArray.push(true);
+                }
+                if (row < tilesColumn - 1 && this.tilesArray[row][col] === this.tilesArray[row + 1][col]) {
+                    gameOverArray.push(true);
                 }
             }
         }
-        console.log(gameOver)
-        return gameOver;
+        console.log(gameOverArray)
+        if (gameOverArray.length === 0){
+            this.gameIsPlaying = false;
+            restart.style.display = 'flex';
+        }else{
+            this.gameIsPlaying = true;
+            restart.style.display = 'none';
+        }
     }
+        
+    
 
     generateTiles(){
         // Draw the image tiles
