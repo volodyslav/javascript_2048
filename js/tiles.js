@@ -5,7 +5,7 @@ class Tiles {
 
         this.#handleKeyboards();
         
-
+        
     }
 
     #handleKeyboards(){
@@ -24,11 +24,12 @@ class Tiles {
             } else if (event.key === "ArrowRight" || event.key === "d") {
                 this.#moveTilesRight();
             }
+            
             this.generateTiles();
             this.generateInitialTiles(); // Generate initial tiles 2
             
             this.#saveGameState(); // Save the game state to local storage
-            
+            this.#checkWinning(); // Check the game state
         }); 
     }
 
@@ -80,9 +81,27 @@ class Tiles {
             // Fill the tile with the random value
             this.tilesArray[randomArray[0]][randomArray[1]] = 2;
             this.drawTiles(randomArray[0], randomArray[1]);
-        }else if (zeroValueLength === 0 && this.gameIsPlaying) {
+        }
+        if (this.gameIsPlaying && zeroValueLength < 4) {
             this.#checkPlayingGame();
         }
+    }
+
+    #checkWinning(){
+        if (this.gameIsPlaying){
+            for (let row = 0; row < tilesColumn; row++){
+                for (let col = 0; col < tilesColumn; col++){
+                    // Check if the tile value is 2048
+                    if (this.tilesArray[row][col] === 2048) {
+                        this.gameIsPlaying = false;
+                        restart.style.display = 'flex';
+                        textGame.innerHTML = "You Win!"
+                        return 
+                    }
+                }
+            }
+        }
+        
     }
 
     #checkPlayingGame(){
@@ -106,6 +125,7 @@ class Tiles {
         if (gameOverArray.length === 0){
             this.gameIsPlaying = false;
             restart.style.display = 'flex';
+            textGame.innerHTML = "You lose!"
         }else{
             this.gameIsPlaying = true;
             restart.style.display = 'none';

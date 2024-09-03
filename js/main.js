@@ -5,7 +5,7 @@ const bestScoreDiv = document.querySelector("#best-score");
 const startBtn = document.querySelector("#start-button");
 const newGameBtn = document.querySelector("#new-game-btn");
 const restart = document.querySelector("#restart");
-
+const textGame = document.querySelector("#text-game");
 // Initial values
 let tilesArray;
 let score = 0;
