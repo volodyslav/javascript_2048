@@ -159,7 +159,6 @@ body{
     font-size: 3rem;
 }
 
-
 /**New game*/
 
 #restart{
@@ -183,14 +182,18 @@ body{
     animation: animate-combine 0.4s forwards ease-in-out;
 }
 
+
 @keyframes animate-combine{
     0%{
         transform: scale(1);
+        opacity: 1;
     }
     50%{
         transform: scale(1.2);
+        opacity: 0.8;
     }
     100%{
         transform: scale(1);
+        opacity: 1;
     }
 }

@@ -2,10 +2,7 @@ class Tiles {
     constructor(tilesArray) {
         this.tilesArray = tilesArray;
         this.gameIsPlaying = true;
-
         this.#handleKeyboards();
-        
-        
     }
 
     #handleKeyboards(){
@@ -14,7 +11,7 @@ class Tiles {
             // Remove previous tile
             const tiles = document.querySelectorAll(".tile-div");
             tiles.forEach(tile => tile.parentNode.removeChild(tile));
-            
+        
             if (event.key === "ArrowUp" || event.key === "w") {
                 this.#moveTilesUp();
             } else if (event.key === "ArrowDown" || event.key === "s") {
@@ -27,7 +24,6 @@ class Tiles {
             
             this.generateTiles();
             this.generateInitialTiles(); // Generate initial tiles 2
-            
             this.#saveGameState(); // Save the game state to local storage
             this.#checkWinning(); // Check the game state
         }); 
@@ -53,14 +49,15 @@ class Tiles {
         
         // draw text
         if (this.tilesArray[row][col] !== 0){
-            newTile.innerHTML = `${this.tilesArray[row][col]}`
+            newTile.innerHTML = `${this.tilesArray[row][col]}`;
             if(combine){
                 newTile.classList.add("tile-combine");
             }
         }
-        newTile.style.color = colors[this.tilesArray[row][col]]
+       
         newTile.style.top = `${row * sizeTile}px`;
         newTile.style.left = `${col * sizeTile}px`;
+        newTile.style.color = colors[this.tilesArray[row][col]]
         tilesDiv.appendChild(newTile);
     }
 
@@ -101,7 +98,6 @@ class Tiles {
                 }
             }
         }
-        
     }
 
     #checkPlayingGame(){
@@ -131,9 +127,7 @@ class Tiles {
             restart.style.display = 'none';
         }
     }
-        
-    
-
+  
     generateTiles(){
         // Draw the image tiles
         for (let h = 0; h < tilesColumn; h++){
